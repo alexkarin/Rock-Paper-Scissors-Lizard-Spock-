@@ -1,0 +1,72 @@
+import random
+
+# define the possible choices and their abbreviations
+choices = {
+    "rock": "r",
+    "paper": "p",
+    "scissors": "s",
+    "lizard": "l",
+    "spock": "k"
+}
+
+# define the rules for winning and losing
+rules = {
+    "rock": ["scissors", "lizard"],
+    "paper": ["rock", "spock"],
+    "scissors": ["paper", "lizard"],
+    "lizard": ["paper", "spock"],
+    "spock": ["rock", "scissors"]
+}
+
+def get_user_choice():
+    """
+    Asks the user to choose rock, paper, scissors, lizard, or spock.
+    """
+    while True:
+        user_choice = input("Enter your choice (r for rock, p for paper, s for scissors, l for lizard, k for spock): ")
+        if user_choice in choices.values():
+            return get_choice_name(user_choice)
+        else:
+            print("Invalid choice. Please try again.")
+
+def get_choice_name(choice):
+    """
+    Returns the name of the choice based on its abbreviation.
+    """
+    for name, abbrev in choices.items():
+        if abbrev == choice:
+            return name
+
+def get_computer_choice():
+    """
+    Generates a random choice for the computer.
+    """
+    return random.choice(list(choices.keys()))
+
+def determine_winner(user_choice, computer_choice):
+    """
+    Determines the winner of the game based on the user's and computer's choices.
+    """
+    if user_choice == computer_choice:
+        return "Tie"
+    elif computer_choice in rules[user_choice]:
+        return "You win!"
+    else:
+        return "Computer wins!"
+
+def play_game():
+    """
+    Plays a single round of rock-paper-scissors-lizard-spock.
+    """
+    print("Let's play Rock Paper Scissors Lizard Spock!")
+    user_choice = get_user_choice()
+    computer_choice = get_computer_choice()
+    print(f"You chose {user_choice}.")
+    print(f"The computer chose {computer_choice}.")
+    print(determine_winner(user_choice, computer_choice))
+
+while True:
+    play_game()
+    play_again = input("Do you want to play again? (y/n): ")
+    if play_again.lower() != "y":
+        break
